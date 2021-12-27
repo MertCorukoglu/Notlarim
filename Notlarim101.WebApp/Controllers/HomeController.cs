@@ -25,7 +25,7 @@ namespace Notlarim101.WebApp.Controllers
 
             NoteManager nm = new NoteManager();
 
-            return View(nm.GetAllNotes().OrderByDescending(s => s.ModifiedOn).ToList());
+            return View(nm.QList().OrderByDescending(s => s.ModifiedOn).ToList());
         }
 
 

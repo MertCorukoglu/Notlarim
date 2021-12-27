@@ -54,24 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="EntityFramework\MyInitializer.cs" />
     <Compile Include="EntityFramework\NotlarimContext.cs" />
     <Compile Include="EntityFramework\Repository.cs" />
     <Compile Include="EntityFramework\RepositoryBase.cs" />
-    <Compile Include="Migrations\202112230744002_InitialCreate.cs" />
-    <Compile Include="Migrations\202112230744002_InitialCreate.Designer.cs">
-      <DependentUpon>202112230744002_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112240924231_EntityEkleme.cs" />
-    <Compile Include="Migrations\202112240924231_EntityEkleme.Designer.cs">
-      <DependentUpon>202112240924231_EntityEkleme.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112240935086_selamlamasil.cs" />
-    <Compile Include="Migrations\202112240935086_selamlamasil.Designer.cs">
-      <DependentUpon>202112240935086_selamlamasil.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,15 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112230744002_InitialCreate.resx">
-      <DependentUpon>202112230744002_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112240924231_EntityEkleme.resx">
-      <DependentUpon>202112240924231_EntityEkleme.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112240935086_selamlamasil.resx">
-      <DependentUpon>202112240935086_selamlamasil.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Abstract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
