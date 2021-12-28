@@ -1,4 +1,5 @@
-﻿@model Notlarim101.Entity.Category
+﻿@using Notlarim101.WebApp
+@model Notlarim101.Entity.Category
 
 @{
     ViewBag.Title = "Kategori Düzelnle";
@@ -42,7 +43,8 @@
                 <div class="form-group">
                     <div class="offset-md-2 d-flex justify-content-between" >
                         @Html.ActionLink("Back to List", "Index",null,new {@class="btn btn-outline-dark" })
-                        <button type="submit" value="Kaydet" class="btn btn-primary" >Kaydet</button>
+                        @*<button type="submit" value="Kaydet" class="btn btn-primary" >Kaydet</button>*@
+                        @Bootstrap.Button("submit","Kaydet","primary",string.Empty,"bi bi-save2","Kaydet")
                     </div>
                     <div>
                        
