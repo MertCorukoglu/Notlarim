@@ -13,10 +13,7 @@ namespace Notlarim101.BusinessLayer
     public class NoteManager:ManagerBase<Note>
     {
 
-        //public List<Note> GetAllNotes()
-        //{
-        //    return rnote.List();
-        //}
-
+        
+        
     }
 }
