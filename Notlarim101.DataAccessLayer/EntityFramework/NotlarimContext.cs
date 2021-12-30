@@ -29,6 +29,27 @@ namespace Notlarim101.DataAccessLayer.EntityFramework
             modelBuilder.Entity<Liked>()
                 .MapToStoredProcedures();
 
+            modelBuilder.Entity<Category>()
+                .HasMany(n => n.Notes)
+                .WithRequired(n => n.Category)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<Note>()
+                .HasMany(n => n.Likes)
+                .WithRequired(n => n.Note)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<Note>()
+                .HasMany(n => n.Comments)
+                .WithRequired(n => n.Note)
+                .WillCascadeOnDelete(true);
+            //modelBuilder.Entity<Comment>()
+            //   .HasOptional(n => n.Note)
+            //   .WithMany()
+            //   .HasForeignKey(v => v.NoteId);
+            
+
+
+
+
         }
 
         public NotlarimContext()

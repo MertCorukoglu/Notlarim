@@ -8,6 +8,7 @@ using Notlarim101.BusinessLayer;
 using Notlarim101.Entity;
 using Notlarim101.Entity.Messages;
 using Notlarim101.Entity.ValueObject;
+using Notlarim101.WebApp.Models;
 using Notlarim101.WebApp.ViewModel;
 
 namespace Notlarim101.WebApp.Controllers
@@ -22,6 +23,7 @@ namespace Notlarim101.WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
+
             //Test test = new Test();
             ////test.InsertTest();
             ////test.UpdateTest();
@@ -62,7 +64,8 @@ namespace Notlarim101.WebApp.Controllers
                     return View(model);
                 }
 
-                Session["login"] = res.Result;//session a kullanici bilgilerini aktarma
+                //Session["login"] = res.Result;//session a kullanici bilgilerini aktarma
+                CurrentSession.Set("login",res.Result );
                 return RedirectToAction("Index");//yonlendirme
             }
             return View(model);
@@ -181,10 +184,11 @@ namespace Notlarim101.WebApp.Controllers
 
         public ActionResult ShowProfile()
         {
-            NotlarimUser currentUser = Session["login"] as NotlarimUser;
-            if (currentUser != null) res = num.GetUserById(currentUser.Id);
+            // NotlarimUser currentUser = Session["login"] as NotlarimUser;
+            //NotlarimUser currentUser = CurrentSession.User;
+            //if (currentUser != null) res = num.GetUserById(currentUser.Id);
 
-            //if (Session["login"] is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id); yukarıdaki kodun tek satır hali
+            if (CurrentSession.User is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id); //yukarıdaki kodun tek satır hali
 
 
             if (res.Errors.Count > 0)
@@ -201,10 +205,10 @@ namespace Notlarim101.WebApp.Controllers
         }
         public ActionResult EditProfile()
         {
-            NotlarimUser currentUser = Session["login"] as NotlarimUser;
-            if (currentUser != null) res = num.GetUserById(currentUser.Id);
+            //NotlarimUser currentUser = Session["login"] as NotlarimUser;
+            //if (currentUser != null) res = num.GetUserById(currentUser.Id);
 
-            //if (Session["login"] is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id); yukarıdaki kodun tek satır hali
+            if (CurrentSession.User is NotlarimUser currentUser) res = num.GetUserById(currentUser.Id); //yukarıdaki kodun tek satır hali
 
             if (res.Errors.Count > 0)
             {
@@ -241,7 +245,8 @@ namespace Notlarim101.WebApp.Controllers
                     return View("Error", errorNotifyObj);
                 }
 
-                Session["login"] = res.Result;
+                // Session["login"] = res.Result;
+                CurrentSession.Set("login", res.Result);
                 return RedirectToAction("ShowProfile");
 
             }
@@ -250,7 +255,7 @@ namespace Notlarim101.WebApp.Controllers
 
         public ActionResult DeleteProfile()
         {
-            if (Session["login"] is NotlarimUser currentUser) res = num.RemoveUserById(currentUser.Id);
+            if (CurrentSession.User is NotlarimUser currentUser) res = num.RemoveUserById(currentUser.Id);
             if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
@@ -262,32 +267,13 @@ namespace Notlarim101.WebApp.Controllers
                 return View("Error", errorNotifyObj);
 
             }
-            Session.Clear();
+            CurrentSession.Clear();
             return RedirectToAction("Index");
         }
-        //[HttpPost]
-        //public ActionResult DeleteProfile(int id)
-        //{
-        //    return View();
-        //}
-        //public ActionResult TestNotify()
-        //{
-        //    ErrorViewModel model = new ErrorViewModel()
-        //    {
-        //        Header = "Yönlendirme",
-        //        Title = "Adıyaman Karpuz Güzeline Giydirme",
-        //        RedirectingTimeout = 30000,
-        //        Items = new List<ErrorMessageObj>()
-        //        {
-        //            new ErrorMessageObj(){Message="Test basarılı 1"},
-        //            new ErrorMessageObj(){Message="Test basarılı 2"},
-        //        }
-        //    };
-        //    return View("Error", model);
-        //}
+
         public ActionResult Logout()
         {
-            Session.Clear();
+            CurrentSession.Clear();
             return RedirectToAction("Index");
         }
 

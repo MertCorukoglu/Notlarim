@@ -16,7 +16,7 @@ namespace Notlarim101.WebApp.Controllers
     {
         CommentManager cmm = new CommentManager();
         NoteManager nm = new NoteManager();
-        
+
         public ActionResult Index()
         {
             return View(cmm.List());
@@ -29,7 +29,7 @@ namespace Notlarim101.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = cmm.Find(x=>x.Id==id);
+            Comment comment = cmm.Find(x => x.Id == id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -52,18 +52,18 @@ namespace Notlarim101.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                if (notId==null)
+                if (notId == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 Note note = nm.Find(s => s.Id == notId);
-                if (note==null)
+                if (note == null)
                 {
                     return new HttpNotFoundResult();
                 }
                 comment.Note = note;
                 comment.Owner = CurrentSession.User;
-                if (cmm.Insert(comment)>0)
+                if (cmm.Insert(comment) > 0)
                 {
                     return Json(new { result = true }, JsonRequestBehavior.AllowGet);
                 }
@@ -71,7 +71,7 @@ namespace Notlarim101.WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            return Json(new {result=false},JsonRequestBehavior.AllowGet);
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)
@@ -95,8 +95,7 @@ namespace Notlarim101.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(comment).State = EntityState.Modified;
-                db.SaveChanges();
+              
                 return RedirectToAction("Index");
             }
             return View(comment);
@@ -123,8 +122,7 @@ namespace Notlarim101.WebApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = cmm.Find(x => x.Id == id);
-            db.Comments.Remove(comment);
-            db.SaveChanges();
+         
             return RedirectToAction("Index");
         }
     }
