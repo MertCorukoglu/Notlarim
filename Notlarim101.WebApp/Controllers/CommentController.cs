@@ -37,14 +37,9 @@ namespace Notlarim101.WebApp.Controllers
             return View(comment);
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Comment comment, int? notId)
+
+        public ActionResult Create(Comment comment, int? noteId)
         {
             ModelState.Remove("CreatedOn");
             ModelState.Remove("ModifiedOn");
@@ -52,11 +47,11 @@ namespace Notlarim101.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                if (notId == null)
+                if (noteId == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                Note note = nm.Find(s => s.Id == notId);
+                Note note = nm.Find(s => s.Id == noteId);
                 if (note == null)
                 {
                     return new HttpNotFoundResult();
@@ -90,15 +85,23 @@ namespace Notlarim101.WebApp.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Comment comment)
+        public ActionResult Edit(int? id, string text)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-              
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(comment);
+            Comment comment = cmm.Find(s => s.Id == id);
+            if (comment == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            comment.Text = text;
+            if (cmm.Update(comment) > 0)
+            {
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -113,17 +116,27 @@ namespace Notlarim101.WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            if (cmm.Delete(comment) > 0)
+            {
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+
         }
 
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult ShowNoteComments(int? id)
         {
-            Comment comment = cmm.Find(x => x.Id == id);
-         
-            return RedirectToAction("Index");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Note note = nm.Find(s => s.Id == id);
+            Note note = nm.QList().Include("Comments").FirstOrDefault(s => s.Id == id);
+            if (note == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_PartialComments", note.Comments);
         }
     }
 }

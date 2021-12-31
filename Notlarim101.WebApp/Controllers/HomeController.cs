@@ -23,7 +23,6 @@ namespace Notlarim101.WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-
             //Test test = new Test();
             ////test.InsertTest();
             ////test.UpdateTest();
