@@ -42,7 +42,7 @@ namespace Notlarim101.BusinessLayer
                     Username = data.Username,
                     Email = data.Email,
                     Password = data.Password,
-                    ProfileImageFilename = "arog.jpg",
+                    ProfileImageFilename = "loginlogo.jpg",
                     ActivateGuid = Guid.NewGuid(),
                     IsActive = false,
                     IsAdmin = false,

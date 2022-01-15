@@ -125,7 +125,7 @@
     <Content Include="Content\ValidationStyle.css" />
     <Content Include="Global.asax" />
     <Content Include="images\arog.jpg" />
-    <Content Include="images\gora.jpg" />
+    <Content Include="images\loginlogo.jpg" />
     <Content Include="images\muhammed.jpg" />
     <Content Include="images\user1.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
